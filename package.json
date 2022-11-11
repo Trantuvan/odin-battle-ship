@@ -1,0 +1,42 @@
+{
+  "name": "odin-battle-ship",
+  "version": "1.0.0",
+  "description": "project to practice TDD with jest",
+  "scripts": {
+    "test": "jest -c ./jest.unit.json",
+    "test:watch": "jest --watch -c ./jest.unit.json",
+    "build": "webpack",
+    "dev": "webpack server",
+    "prod": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trantuvan/odin-battle-ship.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trantuvan/odin-battle-ship/issues"
+  },
+  "homepage": "https://github.com/Trantuvan/odin-battle-ship#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.3.1",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^29.3.1",
+    "prettier": "^2.7.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
