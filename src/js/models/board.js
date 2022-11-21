@@ -35,6 +35,8 @@ export default function board() {
           const endIndex = column + size;
 
           grid[row].fill(type, startIndex, endIndex);
+        } else {
+          throw new Error('ship cannot be fit');
         }
       };
     };

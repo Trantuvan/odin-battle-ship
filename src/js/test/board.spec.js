@@ -30,4 +30,13 @@ describe('board', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  it('should error out ship cannot be fit when place carrier horizontally at "G2"', () => {
+    const initBoard = board();
+    const carrier = { type: 0, size: 5 };
+    const expected = /^ship cannot be fit$/;
+    const actual = () => initBoard.placeAxis('horizontal')(carrier)('G2');
+
+    expect(actual).toThrow(expected);
+  });
 });
