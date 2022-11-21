@@ -13,7 +13,6 @@ describe('board', () => {
   it('should horizontally place ship type carrier at "F2"', () => {
     const initBoard = board();
     const carrier = { type: 0, size: 5 };
-    const actual = initBoard.grid;
     const expected = [
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
@@ -28,6 +27,7 @@ describe('board', () => {
     ];
     initBoard.placeAxis('horizontal')(carrier)('F2');
 
+    const actual = initBoard.grid;
     expect(actual).toEqual(expected);
   });
 
@@ -38,5 +38,29 @@ describe('board', () => {
     const actual = () => initBoard.placeAxis('horizontal')(carrier)('G2');
 
     expect(actual).toThrow(expected);
+  });
+
+  it.only('should horizontally place 2nd ship type Patrol Boat at "D2"', () => {
+    const initBoard = board();
+    const carrier = { type: 0, size: 5 };
+    const patrolBoat = { type: 4, size: 2 };
+    const expected = [
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, 4, 4, 0, 0, 0, 0, 0],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+    ];
+    initBoard.placeAxis('horizontal')(carrier)('F2');
+    initBoard.placeAxis('horizontal')(patrolBoat)('D2');
+
+    const actual = initBoard.grid;
+
+    expect(actual).toEqual(expected);
   });
 });

@@ -16,9 +16,9 @@ export default function board() {
 
   function isFit(cellArray, shipIndexStart, shipSize) {
     const shipContainer = cellArray.slice(shipIndexStart);
-    const cellAvailable = shipContainer.length - shipSize;
+    const cellRemains = shipContainer.length - shipSize;
 
-    if (cellAvailable >= 0) {
+    if (cellRemains >= 0) {
       return true;
     }
     return false;
