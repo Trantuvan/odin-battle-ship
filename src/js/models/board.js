@@ -5,7 +5,7 @@ export default function board() {
   // *fill method make this possible
   const grid = Array(10)
     .fill(null)
-    .map((_) => Array(10).fill(null));
+    .map(() => Array(10).fill(null));
 
   function toXY([xLetter, yNumber]) {
     const column = 'ABCDEFGHIJ'.indexOf(xLetter);
@@ -34,10 +34,8 @@ export default function board() {
           const startIndex = column;
           const endIndex = column + size;
 
-          return grid[row].fill(type, startIndex, endIndex);
+          grid[row].fill(type, startIndex, endIndex);
         }
-
-        return undefined;
       };
     };
   }
