@@ -31,19 +31,31 @@ export default function board() {
     return false;
   }
 
+  function addShipHorizontal(row, column, size, type) {
+    const isShipFit = isFit(grid[row], column, size);
+
+    if (isShipFit) {
+      const startIndex = column;
+      const endIndex = column + size;
+
+      grid[row].fill(type, startIndex, endIndex);
+    } else {
+      throw new Error('ship cannot be fit');
+    }
+  }
+
   function placeAxis(axis) {
     return function ship({ type, size }) {
       return function at(coord) {
         const { column, row } = toXY(coord);
-        const isShipFit = isFit(grid[row], column, size);
 
-        if (isShipFit) {
-          const startIndex = column;
-          const endIndex = column + size;
+        switch (axis) {
+          case 'horizontal':
+            addShipHorizontal(row, column, size, type);
+            break;
 
-          grid[row].fill(type, startIndex, endIndex);
-        } else {
-          throw new Error('ship cannot be fit');
+          default:
+            throw new Error('error in switch axis');
         }
       };
     };
