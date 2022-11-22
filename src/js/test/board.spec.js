@@ -63,4 +63,26 @@ describe('board', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  it('should error out ship cannot be fit when place 2nd patrolBoat horizontally overlay 1st carrier', () => {
+    const initBoard = board();
+    const carrier = { type: 0, size: 5 };
+    const patrolBoat = { type: 4, size: 2 };
+    const expected = /^ship cannot be fit$/;
+    initBoard.placeAxis('horizontal')(carrier)('C4');
+    const actual = () => initBoard.placeAxis('horizontal')(patrolBoat)('B4');
+
+    expect(actual).toThrow(expected);
+  });
+
+  it('should error out ship cannot be fit when place 2nd patrolBoat at "J4"', () => {
+    const initBoard = board();
+    const carrier = { type: 0, size: 5 };
+    const patrolBoat = { type: 4, size: 2 };
+    const expected = /^ship cannot be fit$/;
+    initBoard.placeAxis('horizontal')(carrier)('C4');
+    const actual = () => initBoard.placeAxis('horizontal')(patrolBoat)('J4');
+
+    expect(actual).toThrow(expected);
+  });
 });
