@@ -40,7 +40,7 @@ describe('board', () => {
     expect(actual).toThrow(expected);
   });
 
-  it.only('should horizontally place 2nd ship type Patrol Boat at "D2"', () => {
+  it('should horizontally place 2nd ship type Patrol Boat at "D2"', () => {
     const initBoard = board();
     const carrier = { type: 0, size: 5 };
     const patrolBoat = { type: 4, size: 2 };
