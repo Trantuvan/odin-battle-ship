@@ -1,3 +1,5 @@
+import filterUntil from '../utils/filterUntil';
+
 export default function board() {
   // *Array constructor create array has property length only
   // *index property is not created
@@ -16,7 +18,12 @@ export default function board() {
 
   function isFit(cellArray, shipIndexStart, shipSize) {
     const shipContainer = cellArray.slice(shipIndexStart);
-    const cellRemains = shipContainer.length - shipSize;
+    const cellAvailable = filterUntil(
+      shipContainer,
+      (v) => v === null,
+      (v) => v !== null
+    );
+    const cellRemains = cellAvailable.length - shipSize;
 
     if (cellRemains >= 0) {
       return true;
@@ -49,7 +56,3 @@ export default function board() {
     placeAxis,
   };
 }
-
-const initBoard = board();
-const carrier = { type: 0, size: 5 };
-initBoard.placeAxis('horizontal')(carrier)('F2');
