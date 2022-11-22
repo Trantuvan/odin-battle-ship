@@ -44,6 +44,21 @@ export default function board() {
     }
   }
 
+  function addShipVertical(row, column, size, type) {
+    const columnArray = (arr, col) => arr.map((v) => v[col]);
+    const isShipFit = isFit(columnArray(grid, column), row, size);
+
+    if (isShipFit) {
+      grid.forEach((v, i) => {
+        if (row <= i && i < row + size) {
+          v.splice(column, 1, type);
+        }
+      });
+    } else {
+      throw new Error('ship cannot be fit');
+    }
+  }
+
   function placeAxis(axis) {
     return function ship({ type, size }) {
       return function at(coord) {
@@ -54,6 +69,9 @@ export default function board() {
             addShipHorizontal(row, column, size, type);
             break;
 
+          case 'vertical':
+            addShipVertical(row, column, size, type);
+            break;
           default:
             throw new Error('error in switch axis');
         }
