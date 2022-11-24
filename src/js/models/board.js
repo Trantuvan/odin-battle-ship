@@ -5,9 +5,15 @@ export default function board() {
   // *index property is not created
   // *method (map, filter, reduce) is useless when attemp to iterate array index
   // *fill method make this possible
-  const grid = Array(10)
+  let grid = Array(10)
     .fill(null)
     .map(() => Array(10).fill(null));
+
+  function restoreGrid() {
+    grid = Array(10)
+      .fill(null)
+      .map(() => Array(10).fill(null));
+  }
 
   function toXY([xLetter, yNumber]) {
     const column = 'ABCDEFGHIJ'.indexOf(xLetter);
@@ -133,5 +139,6 @@ export default function board() {
     },
     placeAxis,
     receiveAttack,
+    restoreGrid,
   };
 }
