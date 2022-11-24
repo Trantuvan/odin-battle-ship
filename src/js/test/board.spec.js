@@ -152,4 +152,55 @@ describe('board', () => {
       expect(actual).toThrow(expected);
     });
   });
+
+  describe('receiveAttack', () => {
+    const initBoard = board();
+    const carrier = { type: 0, size: 5 };
+    const battleShip = { type: 1, size: 4 };
+    const destroyer = { type: 2, size: 3 };
+    const submarine = { type: 3, size: 3 };
+    const patrolBoat = { type: 4, size: 2 };
+
+    beforeAll(() => {
+      // * place ship
+      initBoard.placeAxis('horizontal')(destroyer)('G0');
+      initBoard.placeAxis('vertical')(carrier)('F2');
+      initBoard.placeAxis('horizontal')(battleShip)('B4');
+      initBoard.placeAxis('vertical')(patrolBoat)('B7');
+      initBoard.placeAxis('horizontal')(submarine)('F9');
+    });
+
+    it('legal shot miss at "G4"', () => {
+      expect.assertions(2);
+
+      const actualMessage = initBoard.receiveAttack('G4');
+      const expectedData = { message: 'miss', shipType: null };
+
+      const actualGridValue = initBoard.grid[4][6];
+      const expectedGridValue = 'miss';
+
+      expect(actualGridValue).toMatch(expectedGridValue);
+      expect(actualMessage).toEqual(expectedData);
+    });
+
+    it('legal shot hit at "I0"', () => {
+      expect.assertions(2);
+
+      const actualMessage = initBoard.receiveAttack('I0');
+      const expectedData = { message: 'hit', shipType: 2 };
+
+      const actualGridValue = initBoard.grid[0][8];
+      const expectedGridValue = 'hit';
+
+      expect(actualGridValue).toMatch(expectedGridValue);
+      expect(actualMessage).toEqual(expectedData);
+    });
+
+    it('should error out illegal shot at "I0"', () => {
+      const actual = () => initBoard.receiveAttack('I0');
+      const expected = /^illegal shot$/;
+
+      expect(actual).toThrow(expected);
+    });
+  });
 });

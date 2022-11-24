@@ -31,6 +31,13 @@ export default function board() {
     return false;
   }
 
+  function isLegal(gridValue) {
+    if (gridValue === 'hit' || gridValue === 'miss') {
+      return false;
+    }
+    return true;
+  }
+
   function addShipHorizontal(row, column, size, type) {
     const isShipFit = isFit(grid[row], column, size);
 
@@ -79,10 +86,52 @@ export default function board() {
     };
   }
 
+  function receiveAttack(coord) {
+    let data;
+    const { column, row } = toXY(coord);
+    const gridValue = grid[row][column];
+    const isLegalShot = isLegal(gridValue);
+
+    if (isLegalShot === false) {
+      throw new Error('illegal shot');
+    }
+
+    switch (gridValue) {
+      case 0:
+        data = { message: 'hit', shipType: 0 };
+        grid[row][column] = 'hit';
+        break;
+      case 1:
+        data = { message: 'hit', shipType: 1 };
+        grid[row][column] = 'hit';
+        break;
+      case 2:
+        data = { message: 'hit', shipType: 2 };
+        grid[row][column] = 'hit';
+        break;
+      case 3:
+        data = { message: 'hit', shipType: 3 };
+        grid[row][column] = 'hit';
+        break;
+      case 4:
+        data = { message: 'hit', shipType: 4 };
+        grid[row][column] = 'hit';
+        break;
+
+      default:
+        data = { message: 'miss', shipType: null };
+        grid[row][column] = 'miss';
+        break;
+    }
+
+    return data;
+  }
+
   return {
     get grid() {
       return grid;
     },
     placeAxis,
+    receiveAttack,
   };
 }
