@@ -21,6 +21,7 @@ export default function player({ name, isAI = false } = {}) {
   }
 
   function shoot(coord) {
+    // TODO: player should know which board to shoot at
     if (isAI === true) {
       const coordAI = generateCoord();
       if (coordAI !== undefined) {
