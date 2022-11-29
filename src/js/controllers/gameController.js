@@ -76,7 +76,80 @@ export default function gameController() {
     })('A9');
   }
 
+  function isPlayerWin() {
+    const isAllSunk = cpuFleet.every((item) => item.isSunk() === true);
+    if (isAllSunk === true) {
+      return true;
+    }
+    return false;
+  }
+  function isCpuWin() {
+    const isAllSunk = fleet1.every((item) => item.isSunk() === true);
+    if (isAllSunk === true) {
+      return true;
+    }
+    return false;
+  }
+
+  function cpuPlay() {
+    // *1. check wins
+    if (isCpuWin() === true) {
+      return `${cpuPlay.name} wins`;
+    }
+
+    // *2. generateMove
+    const coord = cpuPlayer.generateCoord();
+
+    // *3 not wins yet, allow to shoot
+    try {
+      const result = grid1.receiveAttack(coord);
+
+      if (result.message === 'miss') {
+        // *render miss
+      }
+
+      // *3. render hit
+      // *4. hit cpu ship
+      fleet1[result.shipType].hit();
+    } catch (error) {
+      if (error.message === 'illegal shot') {
+        // TODO: dom not allow this play
+        return error;
+      }
+    }
+    return undefined;
+  }
+
+  function playerPlay(playerMove) {
+    // *1 check if player is win
+    if (isPlayerWin() === true) {
+      return `${player1.name} wins`;
+    }
+
+    // *2 not wins yet, allow to shoot
+    try {
+      const result = cpuGrid.receiveAttack(playerMove);
+
+      if (result.message === 'miss') {
+        // *render miss
+      }
+
+      // *3. render hit
+      // *4. hit cpu ship
+      cpuFleet[result.shipType].hit();
+    } catch (error) {
+      if (error.message === 'illegal shot') {
+        // TODO: dom not allow this play
+        return error;
+      }
+    }
+
+    return undefined;
+  }
+
   return {
     init,
+    playerPlay,
+    cpuPlay,
   };
 }
