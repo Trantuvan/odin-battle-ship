@@ -1,5 +1,4 @@
 /* eslint-disable no-plusplus */
-import PubSub from 'pubsub-js';
 import shuffle from '../utils/shuffle';
 
 export default function player({ name, isAI = false } = {}) {
@@ -20,22 +19,13 @@ export default function player({ name, isAI = false } = {}) {
     return AIMoves.pop();
   }
 
-  function shoot(coord) {
-    // TODO: player should know which board to shoot at
-    if (isAI === true) {
-      const coordAI = generateCoord();
-      if (coordAI !== undefined) {
-        PubSub.publish('player.shoot', coordAI);
-      }
-    } else {
-      PubSub.publish('player.shoot', coord);
-    }
-  }
-
   return {
     get name() {
       return name;
     },
-    shoot,
+    get isAI() {
+      return isAI;
+    },
+    generateCoord,
   };
 }
