@@ -1,0 +1,39 @@
+/**
+ * base styles and typography
+ * ---------------
+ */
+:root {
+  --blue-600: hsl(221, 83%, 53%);
+  --blue-800: hsl(201, 90%, 27%);
+
+  --teal-600: hsl(175, 84%, 32%);
+
+  --rose-500: hsl(350, 89%, 60%);
+}
+
+/*******************
+   Base styles
+   *******************/
+html {
+  font-size: 62.5%;
+  font-weight: 300;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  line-height: 1.4;
+}
+
+body {
+  display: flex;
+  background: linear-gradient(236deg, var(--blue-800), var(--blue-600));
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+img {
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
+/*******************
+   Game board Styles
+   *******************/
