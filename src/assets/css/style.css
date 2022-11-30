@@ -9,6 +9,8 @@
   --teal-600: hsl(175, 84%, 32%);
 
   --rose-500: hsl(350, 89%, 60%);
+
+  --radius: 3px;
 }
 
 /*******************
@@ -35,5 +37,64 @@ img {
 }
 
 /*******************
-   Game board Styles
+   Welcome Sections
    *******************/
+.welcome {
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+  grid-template-areas:
+    'w-header'
+    'w-body';
+}
+
+.welcome-header {
+  grid-area: w-header;
+}
+
+.welcome-header > img {
+  aspect-ratio: 5/1;
+  width: min(60rem, 100%);
+  margin: 0 auto;
+}
+
+.welcome-body {
+  grid-area: w-body;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#form-player {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  flex-direction: column;
+}
+
+.form-action {
+  font-size: 2.5rem;
+  line-height: 2.4;
+  font-weight: 500;
+  color: hsl(0, 0%, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-action > input[type='text'] {
+  padding: 0.2em 0.8em;
+  border-radius: var(--radius);
+  color: hsla(0, 0%, 0%, 0.486);
+}
+
+.form-action > button[type='submit'] {
+  background-color: hsl(0, 0%, 100%);
+  color: var(--blue-600);
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+
+.form-action > button[type='submit']:hover {
+  background-color: var(--blue-600);
+  color: hsl(0, 0%, 100%);
+}
