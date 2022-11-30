@@ -8,13 +8,4 @@ describe('player', () => {
 
     expect(actual).toMatch(expected);
   });
-
-  describe('shoot', () => {
-    mockPubSub.publish = jest.fn();
-
-    it('should send topic player.shoot', () => {
-      player().shoot('B0');
-      expect(mockPubSub.publish).toHaveBeenCalledWith('player.shoot', 'B0');
-    });
-  });
 });
