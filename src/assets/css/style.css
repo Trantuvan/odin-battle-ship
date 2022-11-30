@@ -78,6 +78,7 @@ img {
   font-weight: 500;
   color: hsl(0, 0%, 100%);
   display: flex;
+  gap: 0.5rem;
   flex-direction: column;
   align-items: center;
 }
@@ -86,6 +87,13 @@ img {
   padding: 0.2em 0.8em;
   border-radius: var(--radius);
   color: hsla(0, 0%, 0%, 0.486);
+}
+
+.form-message {
+  font-size: 2rem;
+  line-height: 1.6rem;
+  padding: 4px 0 0;
+  color: var(--rose-500);
 }
 
 .form-action > button[type='submit'] {
@@ -98,4 +106,43 @@ img {
 .form-action > button[type='submit']:hover {
   background-color: var(--blue-600);
   color: hsl(0, 0%, 100%);
+}
+
+.disabled {
+  display: none;
+}
+
+/* animation */
+.fadeIn {
+  animation: 0.5s fadeIn forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    scale: 0;
+    opacity: 0;
+  }
+
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.fadeOut {
+  animation: 0.5s fadeOut forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeOut {
+  from {
+    scale: 1;
+    opacity: 1;
+  }
+
+  to {
+    scale: 0;
+    opacity: 0;
+  }
 }
