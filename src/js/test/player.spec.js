@@ -1,4 +1,3 @@
-import mockPubSub from 'pubsub-js';
 import player from '../models/player';
 
 describe('player', () => {
