@@ -110,8 +110,10 @@ img {
 
 /* place-ship */
 .place-ship {
+  padding: 0.8em;
+  width: min(60rem, 100%);
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
   grid-template-rows: 1fr 4fr;
 }
 
@@ -124,7 +126,7 @@ img {
 }
 
 .command {
-  font-size: 5rem;
+  font-size: clamp(3vw, 4rem, 5vw);
   line-height: 1rem;
   font-weight: 500;
   color: hsl(0, 0%, 100%);
@@ -135,7 +137,7 @@ img {
   color: var(--blue-600);
   cursor: pointer;
   border-radius: var(--radius);
-  font-size: 1.6rem;
+  font-size: clamp(2vw, 1.4rem, 3vw);
   font-weight: 400;
 }
 
@@ -154,7 +156,6 @@ img {
 .cell {
   aspect-ratio: 1/1;
   object-fit: contain;
-  /* width: clamp(7ch, 5rem, 8ch); */
   cursor: pointer;
   border: 2px solid hsl(0, 0%, 100%);
 }
