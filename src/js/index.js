@@ -12,6 +12,7 @@ import gameController from './controllers/gameController';
   const formPlayer = document.querySelector('#form-player');
   const playerNameInput = formPlayer.querySelector('#player-name');
   const formMessage = formPlayer.querySelector('.form-message');
+  const placeShip = document.querySelector('.place-ship');
 
   const game = gameController();
   game.init();
@@ -37,6 +38,7 @@ import gameController from './controllers/gameController';
 
     const player1 = game.createPlayer(playerNameInput.value);
     welcomeSection.classList.add('disabled');
+    placeShip.classList.remove('disabled');
     placeshipView.render({ player: player1 });
     formPlayer.reset();
     return undefined;
