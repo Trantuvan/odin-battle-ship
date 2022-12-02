@@ -108,6 +108,53 @@ img {
   color: hsl(0, 0%, 100%);
 }
 
+/* place-ship */
+.place-ship {
+  display: grid;
+  gap: 2rem;
+  grid-template-rows: 1fr 5fr;
+}
+
+.place-ship-action {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.command {
+  font-size: clamp(4ch, 5rem, 7ch);
+  line-height: 1.6rem;
+  font-weight: 500;
+  color: hsl(0, 0%, 100%);
+}
+
+.place-ship-action > button {
+  background-color: hsl(0, 0%, 100%);
+  color: var(--blue-600);
+  cursor: pointer;
+  border-radius: var(--radius);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.place-ship-action > button:hover {
+  background-color: var(--blue-600);
+  color: hsl(0, 0%, 100%);
+}
+
+.grid {
+  height: 100%;
+  display: grid;
+  gap: 3px;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.cell {
+  cursor: pointer;
+  border: 2px solid hsl(0, 0%, 100%);
+}
+
 .disabled {
   display: none;
 }
