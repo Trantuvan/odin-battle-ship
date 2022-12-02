@@ -10,9 +10,12 @@ export default function gameController() {
   let fleet1;
   let cpuFleet;
 
+  function createPlayer(playerName = '') {
+    player1 = player({ name: playerName.trim() });
+    return player1;
+  }
+
   function init() {
-    // *1. create 2 players
-    player1 = player({ name: 'van' });
     cpuPlayer = player({ name: 'cpu', isAI: true });
     // *2. create 2 grids
     grid1 = board();
@@ -148,6 +151,7 @@ export default function gameController() {
   }
 
   return {
+    createPlayer,
     init,
     playerPlay,
     cpuPlay,

@@ -4,6 +4,7 @@ import '../assets/css/reset.css';
 import '../assets/css/style.css';
 
 // JS
+import placeshipView from './views/placeShipView';
 import gameController from './controllers/gameController';
 
 (() => {
@@ -11,7 +12,8 @@ import gameController from './controllers/gameController';
   const formPlayer = document.querySelector('#form-player');
   const playerNameInput = formPlayer.querySelector('#player-name');
   const formMessage = formPlayer.querySelector('.form-message');
-  let playerName;
+
+  const game = gameController();
 
   // *remove error messages
   playerNameInput.addEventListener('keydown', () => {
@@ -32,9 +34,10 @@ import gameController from './controllers/gameController';
       return undefined;
     }
 
-    playerName = playerNameInput.value;
-    formPlayer.reset();
+    const player1 = game.createPlayer(playerNameInput.value);
     welcomeSection.classList.add('disabled');
+    placeshipView.render({ player: player1 });
+    formPlayer.reset();
     return undefined;
   });
 })();

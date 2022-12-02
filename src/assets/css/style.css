@@ -144,10 +144,13 @@ img {
 }
 
 .grid {
-  height: 100%;
+  width: 75%;
+  min-height: 100%;
+  margin: 0 auto;
   display: grid;
   gap: 3px;
   grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
 }
 
 .cell {
