@@ -14,6 +14,7 @@ import gameController from './controllers/gameController';
   const formMessage = formPlayer.querySelector('.form-message');
 
   const game = gameController();
+  game.init();
 
   // *remove error messages
   playerNameInput.addEventListener('keydown', () => {
