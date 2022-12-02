@@ -24,14 +24,17 @@ import gameController from './controllers/gameController';
   formPlayer.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    if (playerName === undefined || playerName.trim().length === 0) {
+    if (
+      playerNameInput.value === undefined ||
+      playerNameInput.value.trim().length === 0
+    ) {
       formMessage.classList.remove('disabled');
       return undefined;
     }
 
     playerName = playerNameInput.value;
     formPlayer.reset();
-    welcomeSection.classList.add('fadeOut');
+    welcomeSection.classList.add('disabled');
     return undefined;
   });
 })();
