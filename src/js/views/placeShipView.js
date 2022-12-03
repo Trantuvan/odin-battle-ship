@@ -95,6 +95,26 @@ export default (function placeShipView() {
             colorShipSize(rowCellsDom, column, column + currentShip.size);
           }
         }
+
+        if (direction === 'vertical') {
+          const columnArray = (arr, col) => arr.map((v) => v[col]);
+          const isShipFit = grid.isFit(
+            columnArray(grid.grid, column),
+            row,
+            playerFleet[0].size
+          );
+
+          if (isShipFit === false) {
+            evt.target.style.cursor = 'not-allowed';
+            mouseOver(evt);
+          }
+
+          if (isShipFit === true) {
+            evt.target.style.cursor = 'cell';
+            const rowCellsDom = columnArray(twoDCellArray, column);
+            colorShipSize(rowCellsDom, row, row + currentShip.size);
+          }
+        }
         return undefined;
       });
     });
@@ -128,6 +148,24 @@ export default (function placeShipView() {
             unColorShipSize(rowCellsDom, column, column + currentShip.size);
           }
         }
+
+        if (direction === 'vertical') {
+          const columnArray = (arr, col) => arr.map((v) => v[col]);
+          const isShipFit = grid.isFit(
+            columnArray(grid.grid, column),
+            row,
+            playerFleet[0].size
+          );
+
+          if (isShipFit === false) {
+            mouseOut(evt);
+          }
+
+          if (isShipFit === true) {
+            const rowCellsDom = columnArray(twoDCellArray, column);
+            unColorShipSize(rowCellsDom, row, row + currentShip.size);
+          }
+        }
         return undefined;
       });
     });
@@ -141,7 +179,7 @@ export default (function placeShipView() {
         );
 
         if (popCurrentShip === undefined) {
-          console.log('out of ships');
+          return undefined;
         }
 
         if (direction === 'horizontal') {
@@ -155,6 +193,21 @@ export default (function placeShipView() {
             size: popCurrentShip.size,
           })(evt.target.getAttribute('local-data'));
         }
+
+        if (direction === 'vertical') {
+          evt.target.style.cursor = 'cell';
+          const columnArray = (arr, col) => arr.map((v) => v[col]);
+          const rowCellsDom = columnArray(twoDCellArray, column);
+          colorShipSize(rowCellsDom, row, row + popCurrentShip.size);
+          populated(rowCellsDom, row, row + popCurrentShip.size);
+
+          grid.placeAxis(direction)({
+            type: popCurrentShip.type,
+            size: popCurrentShip.size,
+          })(evt.target.getAttribute('local-data'));
+        }
+
+        return undefined;
       });
     });
   }
