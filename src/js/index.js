@@ -39,7 +39,11 @@ import gameController from './controllers/gameController';
     const player1 = game.createPlayer(playerNameInput.value);
     welcomeSection.classList.add('disabled');
     placeShip.classList.remove('disabled');
-    placeshipView.render({ player: player1 });
+    placeshipView.render({
+      player: player1,
+      playerGrid: game.grid1,
+      playerFleet: game.fleet1,
+    });
     formPlayer.reset();
     return undefined;
   });

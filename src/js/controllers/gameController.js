@@ -57,26 +57,26 @@ export default function gameController() {
       size: cpuFleet[3].size,
     })('F9');
 
-    grid1.placeAxis('horizontal')({
-      type: fleet1[0].type,
-      size: fleet1[0].size,
-    })('C1');
-    grid1.placeAxis('vertical')({
-      type: fleet1[1].type,
-      size: fleet1[1].size,
-    })('A2');
-    grid1.placeAxis('vertical')({
-      type: fleet1[2].type,
-      size: fleet1[2].size,
-    })('J7');
-    grid1.placeAxis('horizontal')({
-      type: fleet1[3].type,
-      size: fleet1[3].size,
-    })('F8');
-    grid1.placeAxis('horizontal')({
-      type: fleet1[4].type,
-      size: fleet1[4].size,
-    })('A9');
+    // grid1.placeAxis('horizontal')({
+    //   type: fleet1[0].type,
+    //   size: fleet1[0].size,
+    // })('C1');
+    // grid1.placeAxis('vertical')({
+    //   type: fleet1[1].type,
+    //   size: fleet1[1].size,
+    // })('A2');
+    // grid1.placeAxis('vertical')({
+    //   type: fleet1[2].type,
+    //   size: fleet1[2].size,
+    // })('J7');
+    // grid1.placeAxis('horizontal')({
+    //   type: fleet1[3].type,
+    //   size: fleet1[3].size,
+    // })('F8');
+    // grid1.placeAxis('horizontal')({
+    //   type: fleet1[4].type,
+    //   size: fleet1[4].size,
+    // })('A9');
   }
 
   function isPlayerWin() {
@@ -151,6 +151,12 @@ export default function gameController() {
   }
 
   return {
+    get grid1() {
+      return grid1;
+    },
+    get fleet1() {
+      return fleet1;
+    },
     createPlayer,
     init,
     playerPlay,

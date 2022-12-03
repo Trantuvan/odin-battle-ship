@@ -137,6 +137,8 @@ export default function board() {
     get grid() {
       return grid;
     },
+    toXY,
+    isFit,
     placeAxis,
     receiveAttack,
     restoreGrid,
