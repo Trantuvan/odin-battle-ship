@@ -39,7 +39,16 @@ export default (function placeShipView() {
     function unColorShipSize(domArray, startIndex, endIndex) {
       const shipArray = domArray.slice(startIndex, endIndex);
       shipArray.forEach((div) => {
-        div.style.backgroundColor = 'hsl(201, 90%, 27%)';
+        if (div.getAttribute('isPopulated-data') === 'false') {
+          div.style.backgroundColor = 'hsl(201, 90%, 27%)';
+        }
+      });
+    }
+
+    function populated(domArray, startIndex, endIndex) {
+      const shipArray = domArray.slice(startIndex, endIndex);
+      shipArray.forEach((div) => {
+        div.setAttribute('isPopulated-data', 'true');
       });
     }
 
@@ -48,12 +57,21 @@ export default (function placeShipView() {
     }
 
     function mouseOut(evt) {
-      evt.target.style.backgroundColor = 'hsl(201, 90%, 27%)';
+      if (evt.target.getAttribute('isPopulated-data') === 'false') {
+        evt.target.style.backgroundColor = 'hsl(201, 90%, 27%)';
+      } else if (evt.target.getAttribute('isPopulated-data') === 'true') {
+        evt.target.style.backgroundColor = 'grey';
+      }
     }
 
+    // *Hover to check ship size is Fit
     cellArray.forEach((cell) => {
       cell.addEventListener('mouseover', (evt) => {
         const currentShip = playerFleet[0];
+
+        if (currentShip === undefined) {
+          return undefined;
+        }
 
         const { column, row } = grid.toXY(
           evt.target.getAttribute('local-data')
@@ -77,12 +95,19 @@ export default (function placeShipView() {
             colorShipSize(rowCellsDom, column, column + currentShip.size);
           }
         }
+        return undefined;
       });
     });
 
+    // *Hover to remove the mouseover event
     cellArray.forEach((cell) => {
       cell.addEventListener('mouseout', (evt) => {
         const currentShip = playerFleet[0];
+
+        if (currentShip === undefined) {
+          return undefined;
+        }
+
         const { column, row } = grid.toXY(
           evt.target.getAttribute('local-data')
         );
@@ -99,10 +124,36 @@ export default (function placeShipView() {
           }
 
           if (isShipFit === true) {
-            evt.target.style.cursor = 'cell';
             const rowCellsDom = twoDCellArray[row];
             unColorShipSize(rowCellsDom, column, column + currentShip.size);
           }
+        }
+        return undefined;
+      });
+    });
+
+    // *click to placeShip into board
+    cellArray.forEach((cell) => {
+      cell.addEventListener('click', (evt) => {
+        const popCurrentShip = playerFleet.shift();
+        const { column, row } = grid.toXY(
+          evt.target.getAttribute('local-data')
+        );
+
+        if (popCurrentShip === undefined) {
+          console.log('out of ships');
+        }
+
+        if (direction === 'horizontal') {
+          evt.target.style.cursor = 'cell';
+          const rowCellsDom = twoDCellArray[row];
+          colorShipSize(rowCellsDom, column, column + popCurrentShip.size);
+          populated(rowCellsDom, column, column + popCurrentShip.size);
+
+          grid.placeAxis(direction)({
+            type: popCurrentShip.type,
+            size: popCurrentShip.size,
+          })(evt.target.getAttribute('local-data'));
         }
       });
     });
@@ -123,106 +174,106 @@ export default (function placeShipView() {
     </div>
     <div class="place-ship-body">
       <div class="grid">
-        <div class="cell" local-data="A0"></div>
-        <div class="cell" local-data="B0"></div>
-        <div class="cell" local-data="C0"></div>
-        <div class="cell" local-data="D0"></div>
-        <div class="cell" local-data="E0"></div>
-        <div class="cell" local-data="F0"></div>
-        <div class="cell" local-data="G0"></div>
-        <div class="cell" local-data="H0"></div>
-        <div class="cell" local-data="I0"></div>
-        <div class="cell" local-data="J0"></div>
-        <div class="cell" local-data="A1"></div>
-        <div class="cell" local-data="B1"></div>
-        <div class="cell" local-data="C1"></div>
-        <div class="cell" local-data="D1"></div>
-        <div class="cell" local-data="E1"></div>
-        <div class="cell" local-data="F1"></div>
-        <div class="cell" local-data="G1"></div>
-        <div class="cell" local-data="H1"></div>
-        <div class="cell" local-data="I1"></div>
-        <div class="cell" local-data="J1"></div>
-        <div class="cell" local-data="A2"></div>
-        <div class="cell" local-data="B2"></div>
-        <div class="cell" local-data="C2"></div>
-        <div class="cell" local-data="D2"></div>
-        <div class="cell" local-data="E2"></div>
-        <div class="cell" local-data="F2"></div>
-        <div class="cell" local-data="G2"></div>
-        <div class="cell" local-data="H2"></div>
-        <div class="cell" local-data="I2"></div>
-        <div class="cell" local-data="J2"></div>
-        <div class="cell" local-data="A3"></div>
-        <div class="cell" local-data="B3"></div>
-        <div class="cell" local-data="C3"></div>
-        <div class="cell" local-data="D3"></div>
-        <div class="cell" local-data="E3"></div>
-        <div class="cell" local-data="F3"></div>
-        <div class="cell" local-data="G3"></div>
-        <div class="cell" local-data="H3"></div>
-        <div class="cell" local-data="I3"></div>
-        <div class="cell" local-data="J3"></div>
-        <div class="cell" local-data="A4"></div>
-        <div class="cell" local-data="B4"></div>
-        <div class="cell" local-data="C4"></div>
-        <div class="cell" local-data="D4"></div>
-        <div class="cell" local-data="E4"></div>
-        <div class="cell" local-data="F4"></div>
-        <div class="cell" local-data="G4"></div>
-        <div class="cell" local-data="H4"></div>
-        <div class="cell" local-data="I4"></div>
-        <div class="cell" local-data="J4"></div>
-        <div class="cell" local-data="A5"></div>
-        <div class="cell" local-data="B5"></div>
-        <div class="cell" local-data="C5"></div>
-        <div class="cell" local-data="D5"></div>
-        <div class="cell" local-data="E5"></div>
-        <div class="cell" local-data="F5"></div>
-        <div class="cell" local-data="G5"></div>
-        <div class="cell" local-data="H5"></div>
-        <div class="cell" local-data="I5"></div>
-        <div class="cell" local-data="J5"></div>
-        <div class="cell" local-data="A6"></div>
-        <div class="cell" local-data="B6"></div>
-        <div class="cell" local-data="C6"></div>
-        <div class="cell" local-data="D6"></div>
-        <div class="cell" local-data="E6"></div>
-        <div class="cell" local-data="E6"></div>
-        <div class="cell" local-data="G6"></div>
-        <div class="cell" local-data="H6"></div>
-        <div class="cell" local-data="I6"></div>
-        <div class="cell" local-data="J6"></div>
-        <div class="cell" local-data="A7"></div>
-        <div class="cell" local-data="B7"></div>
-        <div class="cell" local-data="C7"></div>
-        <div class="cell" local-data="D7"></div>
-        <div class="cell" local-data="E7"></div>
-        <div class="cell" local-data="F7"></div>
-        <div class="cell" local-data="G7"></div>
-        <div class="cell" local-data="H7"></div>
-        <div class="cell" local-data="I7"></div>
-        <div class="cell" local-data="J7"></div>
-        <div class="cell" local-data="A8"></div>
-        <div class="cell" local-data="B8"></div>
-        <div class="cell" local-data="C8"></div>
-        <div class="cell" local-data="D8"></div>
-        <div class="cell" local-data="E8"></div>
-        <div class="cell" local-data="F8"></div>
-        <div class="cell" local-data="G8"></div>
-        <div class="cell" local-data="H8"></div>
-        <div class="cell" local-data="I8"></div>
-        <div class="cell" local-data="J8"></div>
-        <div class="cell" local-data="A9"></div>
-        <div class="cell" local-data="B9"></div>
-        <div class="cell" local-data="C9"></div>
-        <div class="cell" local-data="D9"></div>
-        <div class="cell" local-data="E9"></div>
-        <div class="cell" local-data="F9"></div>
-        <div class="cell" local-data="G9"></div>
-        <div class="cell" local-data="H9"></div>
-        <div class="cell" local-data="I9"></div>
-        <div class="cell" local-data="J9"></div>
+        <div class="cell" local-data="A0" isPopulated-data="false"></div>
+        <div class="cell" local-data="B0" isPopulated-data="false"></div>
+        <div class="cell" local-data="C0" isPopulated-data="false"></div>
+        <div class="cell" local-data="D0" isPopulated-data="false"></div>
+        <div class="cell" local-data="E0" isPopulated-data="false"></div>
+        <div class="cell" local-data="F0" isPopulated-data="false"></div>
+        <div class="cell" local-data="G0" isPopulated-data="false"></div>
+        <div class="cell" local-data="H0" isPopulated-data="false"></div>
+        <div class="cell" local-data="I0" isPopulated-data="false"></div>
+        <div class="cell" local-data="J0" isPopulated-data="false"></div>
+        <div class="cell" local-data="A1" isPopulated-data="false"></div>
+        <div class="cell" local-data="B1" isPopulated-data="false"></div>
+        <div class="cell" local-data="C1" isPopulated-data="false"></div>
+        <div class="cell" local-data="D1" isPopulated-data="false"></div>
+        <div class="cell" local-data="E1" isPopulated-data="false"></div>
+        <div class="cell" local-data="F1" isPopulated-data="false"></div>
+        <div class="cell" local-data="G1" isPopulated-data="false"></div>
+        <div class="cell" local-data="H1" isPopulated-data="false"></div>
+        <div class="cell" local-data="I1" isPopulated-data="false"></div>
+        <div class="cell" local-data="J1" isPopulated-data="false"></div>
+        <div class="cell" local-data="A2" isPopulated-data="false"></div>
+        <div class="cell" local-data="B2" isPopulated-data="false"></div>
+        <div class="cell" local-data="C2" isPopulated-data="false"></div>
+        <div class="cell" local-data="D2" isPopulated-data="false"></div>
+        <div class="cell" local-data="E2" isPopulated-data="false"></div>
+        <div class="cell" local-data="F2" isPopulated-data="false"></div>
+        <div class="cell" local-data="G2" isPopulated-data="false"></div>
+        <div class="cell" local-data="H2" isPopulated-data="false"></div>
+        <div class="cell" local-data="I2" isPopulated-data="false"></div>
+        <div class="cell" local-data="J2" isPopulated-data="false"></div>
+        <div class="cell" local-data="A3" isPopulated-data="false"></div>
+        <div class="cell" local-data="B3" isPopulated-data="false"></div>
+        <div class="cell" local-data="C3" isPopulated-data="false"></div>
+        <div class="cell" local-data="D3" isPopulated-data="false"></div>
+        <div class="cell" local-data="E3" isPopulated-data="false"></div>
+        <div class="cell" local-data="F3" isPopulated-data="false"></div>
+        <div class="cell" local-data="G3" isPopulated-data="false"></div>
+        <div class="cell" local-data="H3" isPopulated-data="false"></div>
+        <div class="cell" local-data="I3" isPopulated-data="false"></div>
+        <div class="cell" local-data="J3" isPopulated-data="false"></div>
+        <div class="cell" local-data="A4" isPopulated-data="false"></div>
+        <div class="cell" local-data="B4" isPopulated-data="false"></div>
+        <div class="cell" local-data="C4" isPopulated-data="false"></div>
+        <div class="cell" local-data="D4" isPopulated-data="false"></div>
+        <div class="cell" local-data="E4" isPopulated-data="false"></div>
+        <div class="cell" local-data="F4" isPopulated-data="false"></div>
+        <div class="cell" local-data="G4" isPopulated-data="false"></div>
+        <div class="cell" local-data="H4" isPopulated-data="false"></div>
+        <div class="cell" local-data="I4" isPopulated-data="false"></div>
+        <div class="cell" local-data="J4" isPopulated-data="false"></div>
+        <div class="cell" local-data="A5" isPopulated-data="false"></div>
+        <div class="cell" local-data="B5" isPopulated-data="false"></div>
+        <div class="cell" local-data="C5" isPopulated-data="false"></div>
+        <div class="cell" local-data="D5" isPopulated-data="false"></div>
+        <div class="cell" local-data="E5" isPopulated-data="false"></div>
+        <div class="cell" local-data="F5" isPopulated-data="false"></div>
+        <div class="cell" local-data="G5" isPopulated-data="false"></div>
+        <div class="cell" local-data="H5" isPopulated-data="false"></div>
+        <div class="cell" local-data="I5" isPopulated-data="false"></div>
+        <div class="cell" local-data="J5" isPopulated-data="false"></div>
+        <div class="cell" local-data="A6" isPopulated-data="false"></div>
+        <div class="cell" local-data="B6" isPopulated-data="false"></div>
+        <div class="cell" local-data="C6" isPopulated-data="false"></div>
+        <div class="cell" local-data="D6" isPopulated-data="false"></div>
+        <div class="cell" local-data="E6" isPopulated-data="false"></div>
+        <div class="cell" local-data="E6" isPopulated-data="false"></div>
+        <div class="cell" local-data="G6" isPopulated-data="false"></div>
+        <div class="cell" local-data="H6" isPopulated-data="false"></div>
+        <div class="cell" local-data="I6" isPopulated-data="false"></div>
+        <div class="cell" local-data="J6" isPopulated-data="false"></div>
+        <div class="cell" local-data="A7" isPopulated-data="false"></div>
+        <div class="cell" local-data="B7" isPopulated-data="false"></div>
+        <div class="cell" local-data="C7" isPopulated-data="false"></div>
+        <div class="cell" local-data="D7" isPopulated-data="false"></div>
+        <div class="cell" local-data="E7" isPopulated-data="false"></div>
+        <div class="cell" local-data="F7" isPopulated-data="false"></div>
+        <div class="cell" local-data="G7" isPopulated-data="false"></div>
+        <div class="cell" local-data="H7" isPopulated-data="false"></div>
+        <div class="cell" local-data="I7" isPopulated-data="false"></div>
+        <div class="cell" local-data="J7" isPopulated-data="false"></div>
+        <div class="cell" local-data="A8" isPopulated-data="false"></div>
+        <div class="cell" local-data="B8" isPopulated-data="false"></div>
+        <div class="cell" local-data="C8" isPopulated-data="false"></div>
+        <div class="cell" local-data="D8" isPopulated-data="false"></div>
+        <div class="cell" local-data="E8" isPopulated-data="false"></div>
+        <div class="cell" local-data="F8" isPopulated-data="false"></div>
+        <div class="cell" local-data="G8" isPopulated-data="false"></div>
+        <div class="cell" local-data="H8" isPopulated-data="false"></div>
+        <div class="cell" local-data="I8" isPopulated-data="false"></div>
+        <div class="cell" local-data="J8" isPopulated-data="false"></div>
+        <div class="cell" local-data="A9" isPopulated-data="false"></div>
+        <div class="cell" local-data="B9" isPopulated-data="false"></div>
+        <div class="cell" local-data="C9" isPopulated-data="false"></div>
+        <div class="cell" local-data="D9" isPopulated-data="false"></div>
+        <div class="cell" local-data="E9" isPopulated-data="false"></div>
+        <div class="cell" local-data="F9" isPopulated-data="false"></div>
+        <div class="cell" local-data="G9" isPopulated-data="false"></div>
+        <div class="cell" local-data="H9" isPopulated-data="false"></div>
+        <div class="cell" local-data="I9" isPopulated-data="false"></div>
+        <div class="cell" local-data="J9" isPopulated-data="false"></div>
       </div>
     </div>
     `;
