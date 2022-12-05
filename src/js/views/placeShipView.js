@@ -13,6 +13,12 @@ export default (function placeShipView() {
       const playGround = document.querySelector('.play-ground');
       placeShip.classList.add('disabled');
       playGround.classList.remove('disabled');
+
+      cellArray.forEach((cell) => {
+        cell.setAttribute('isPopulated-data', 'false');
+        cell.style.backgroundColor = 'hsl(201, 90%, 27%)';
+        cell.style.cursor = 'pointer';
+      });
       return undefined;
     });
 
