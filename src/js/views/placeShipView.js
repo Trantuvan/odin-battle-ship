@@ -1,9 +1,20 @@
 /* eslint-disable no-param-reassign */
 export default (function placeShipView() {
-  function addDomEvent(changeDirBtn, cells, grid, fleet) {
+  function addDomEvent(changeDirBtn, cells, grid, fleet, nextBtn) {
     const cellArray = Array.from(cells);
     let direction = 'horizontal';
     const playerFleet = [...fleet];
+
+    nextBtn.addEventListener('click', () => {
+      if (playerFleet.length > 0) {
+        return undefined;
+      }
+      const placeShip = document.querySelector('.place-ship');
+      const playGround = document.querySelector('.play-ground');
+      placeShip.classList.add('disabled');
+      playGround.classList.remove('disabled');
+      return undefined;
+    });
 
     changeDirBtn.addEventListener('click', () => {
       const dirValue = changeDirBtn.querySelector('.dir');
@@ -329,11 +340,15 @@ export default (function placeShipView() {
         <div class="cell" local-data="J9" isPopulated-data="false"></div>
       </div>
     </div>
+    <div class="place-ship-footer">
+      <button class="next-phase">NEXT</button>
+    </div>
     `;
 
     const changeDirBtn = placeShip.querySelector('.change-dir');
     const cells = placeShip.querySelectorAll('.cell');
-    addDomEvent(changeDirBtn, cells, playerGrid, playerFleet);
+    const nextBtn = placeShip.querySelector('.next-phase');
+    addDomEvent(changeDirBtn, cells, playerGrid, playerFleet, nextBtn);
   };
 
   return {
