@@ -45,31 +45,18 @@ export default function board() {
   }
 
   function addShipHorizontal(row, column, size, type) {
-    const isShipFit = isFit(grid[row], column, size);
+    const startIndex = column;
+    const endIndex = column + size;
 
-    if (isShipFit) {
-      const startIndex = column;
-      const endIndex = column + size;
-
-      grid[row].fill(type, startIndex, endIndex);
-    } else {
-      throw new Error('ship cannot be fit');
-    }
+    grid[row].fill(type, startIndex, endIndex);
   }
 
   function addShipVertical(row, column, size, type) {
-    const columnArray = (arr, col) => arr.map((v) => v[col]);
-    const isShipFit = isFit(columnArray(grid, column), row, size);
-
-    if (isShipFit) {
-      grid.forEach((v, i) => {
-        if (row <= i && i < row + size) {
-          v.splice(column, 1, type);
-        }
-      });
-    } else {
-      throw new Error('ship cannot be fit');
-    }
+    grid.forEach((v, i) => {
+      if (row <= i && i < row + size) {
+        v.splice(column, 1, type);
+      }
+    });
   }
 
   function placeAxis(axis) {
