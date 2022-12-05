@@ -194,6 +194,52 @@ img {
   color: hsl(0, 0%, 100%);
 }
 
+.play-ground {
+  padding: 0.8em;
+  width: 80vw;
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+}
+
+.play-status {
+  width: min(60rem, 100%);
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    rgb(55, 55, 55) 0%,
+    rgb(41, 41, 41) 29%,
+    rgb(41, 41, 41) 76%,
+    rgb(56, 56, 56) 100%
+  );
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-status > p {
+  padding: 1em;
+  font-size: 3rem;
+  font-weight: 500;
+  color: hsl(0, 0%, 100%);
+}
+
+.play-grid {
+  display: grid;
+  gap: 2em;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.play-grid .title {
+  width: max-content;
+  margin: 0 auto;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: hsl(0, 0%, 100%);
+}
+
 .disabled {
   display: none;
 }
