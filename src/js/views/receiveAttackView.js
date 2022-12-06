@@ -1,7 +1,26 @@
 import gameController from '../controllers/gameController';
 /* eslint-disable no-param-reassign */
 export default (function receiveAttackView() {
-  function addDomEvent(friendlyCells, enemyCells) {}
+  function addDomEvent(friendlyCells, enemyCells) {
+    // *hover to guide where to click
+    enemyCells.forEach((cell) => {
+      cell.addEventListener('mouseover', (evt) => {
+        if (evt.target.getAttribute('isPopulated-data') === 'true') {
+          evt.target.style.backgroundColor = 'red';
+          evt.target.style.cursor = 'not-allowed';
+        }
+
+        evt.target.style.backgroundColor = 'grey';
+      });
+    });
+
+    // *Hover to uncolored background
+    enemyCells.forEach((cell) => {
+      cell.addEventListener('mouseout', (evt) => {
+        evt.target.style.backgroundColor = 'hsl(201, 90%, 27%)';
+      });
+    });
+  }
 
   const renderAllFriendlyCells = (friendlyCells, domArray) => {
     const friendlyArray = Array.from(friendlyCells);
