@@ -1,3 +1,4 @@
+import gameController from '../controllers/gameController';
 /* eslint-disable no-param-reassign */
 export default (function receiveAttack() {
   const render = () => {
@@ -5,11 +6,11 @@ export default (function receiveAttack() {
 
     playGround.innerHTML = `
     <div class="play-status">
-    <p>Player's turns</p>
+    <p>Awaiting orders, Admiral ${gameController.player1.name}</p>
   </div>
   <div class="play-grid">
-    <div class="enemy-water">
-      <h2 class="title">ENEMY WATER</h2>
+    <div class="friendly-water">
+      <h2 class="title">FRIENDLY WATER</h2>
       <div class="grid">
         <div class="cell" local-data="A0" isPopulated-data="false"></div>
         <div class="cell" local-data="B0" isPopulated-data="false"></div>
@@ -113,8 +114,8 @@ export default (function receiveAttack() {
         <div class="cell" local-data="J9" isPopulated-data="false"></div>
       </div>
     </div>
-    <div class="friendly-water">
-      <h2 class="title">FRIENDLY WATER</h2>
+    <div class="enemy-water">
+      <h2 class="title">ENEMY WATER</h2>
       <div class="grid">
         <div class="cell" local-data="A0" isPopulated-data="false"></div>
         <div class="cell" local-data="B0" isPopulated-data="false"></div>
