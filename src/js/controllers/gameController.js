@@ -2,7 +2,7 @@ import player from '../models/player';
 import board from '../models/board';
 import ship from '../models/ship';
 
-export default function gameController() {
+export default (function gameController() {
   let player1;
   let cpuPlayer;
   let grid1;
@@ -12,7 +12,6 @@ export default function gameController() {
 
   function createPlayer(playerName = '') {
     player1 = player({ name: playerName.trim() });
-    return player1;
   }
 
   function init() {
@@ -56,27 +55,6 @@ export default function gameController() {
       type: cpuFleet[3].type,
       size: cpuFleet[3].size,
     })('F9');
-
-    // grid1.placeAxis('horizontal')({
-    //   type: fleet1[0].type,
-    //   size: fleet1[0].size,
-    // })('C1');
-    // grid1.placeAxis('vertical')({
-    //   type: fleet1[1].type,
-    //   size: fleet1[1].size,
-    // })('A2');
-    // grid1.placeAxis('vertical')({
-    //   type: fleet1[2].type,
-    //   size: fleet1[2].size,
-    // })('J7');
-    // grid1.placeAxis('horizontal')({
-    //   type: fleet1[3].type,
-    //   size: fleet1[3].size,
-    // })('F8');
-    // grid1.placeAxis('horizontal')({
-    //   type: fleet1[4].type,
-    //   size: fleet1[4].size,
-    // })('A9');
   }
 
   function isPlayerWin() {
@@ -157,9 +135,12 @@ export default function gameController() {
     get fleet1() {
       return fleet1;
     },
+    get player1() {
+      return player1;
+    },
     createPlayer,
     init,
     playerPlay,
     cpuPlay,
   };
-}
+})();
