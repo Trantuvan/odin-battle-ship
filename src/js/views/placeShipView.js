@@ -1,4 +1,4 @@
-import receiveAttackView from './receiveAttack';
+import receiveAttackView from './receiveAttackView';
 /* eslint-disable no-param-reassign */
 export default (function placeShipView() {
   function addDomEvent(changeDirBtn, cells, grid, fleet, nextBtn) {
@@ -14,7 +14,7 @@ export default (function placeShipView() {
       const playGround = document.querySelector('.play-ground');
       placeShip.classList.add('disabled');
       playGround.classList.remove('disabled');
-      receiveAttackView.render();
+      receiveAttackView.render({ domArray: cellArray });
 
       cellArray.forEach((cell) => {
         cell.setAttribute('isPopulated-data', 'false');

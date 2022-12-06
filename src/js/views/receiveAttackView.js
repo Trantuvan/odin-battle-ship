@@ -1,7 +1,18 @@
 import gameController from '../controllers/gameController';
 /* eslint-disable no-param-reassign */
-export default (function receiveAttack() {
-  const render = () => {
+export default (function receiveAttackView() {
+  function addDomEvent(friendlyCells, enemyCells) {}
+
+  const renderAllFriendlyCells = (friendlyCells, domArray) => {
+    const friendlyArray = Array.from(friendlyCells);
+    friendlyArray.forEach((cell, index) => {
+      if (domArray[index].getAttribute('isPopulated-data') === 'true') {
+        cell.style.backgroundColor = 'grey';
+      }
+    });
+  };
+
+  const render = ({ domArray }) => {
     const playGround = document.querySelector('.play-ground');
 
     playGround.innerHTML = `
@@ -221,6 +232,12 @@ export default (function receiveAttack() {
     </div>
   </div>
     `;
+
+    const friendlyCells = playGround.querySelectorAll('.friendly-water .cell');
+    const enemyCells = playGround.querySelectorAll('.enemy-water .cell');
+
+    renderAllFriendlyCells(friendlyCells, domArray);
+    addDomEvent(friendlyCells, enemyCells);
   };
 
   return {
