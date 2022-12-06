@@ -14,8 +14,7 @@ import gameController from './controllers/gameController';
   const formMessage = formPlayer.querySelector('.form-message');
   const placeShip = document.querySelector('.place-ship');
 
-  const game = gameController();
-  game.init();
+  gameController.init();
 
   // *remove error messages
   playerNameInput.addEventListener('keydown', () => {
@@ -36,13 +35,14 @@ import gameController from './controllers/gameController';
       return undefined;
     }
 
-    const player1 = game.createPlayer(playerNameInput.value);
+    gameController.createPlayer(playerNameInput.value);
+    const { player1 } = gameController;
     welcomeSection.classList.add('disabled');
     placeShip.classList.remove('disabled');
     placeshipView.render({
       player: player1,
-      playerGrid: game.grid1,
-      playerFleet: game.fleet1,
+      playerGrid: gameController.grid1,
+      playerFleet: gameController.fleet1,
     });
     formPlayer.reset();
     return undefined;
