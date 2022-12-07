@@ -173,6 +173,14 @@ img {
   object-fit: contain;
   cursor: pointer;
   border: 2px solid hsl(0, 0%, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell > img {
+  aspect-ratio: 1/1;
+  width: 50%;
 }
 
 .place-ship-footer {
@@ -221,7 +229,7 @@ img {
 
 .play-status > p {
   padding: 1em;
-  font-size: 3rem;
+  font-size: clamp(1.8vw, 3ch, 2.5vw);
   font-weight: 500;
   color: hsl(0, 0%, 100%);
 }
