@@ -13,11 +13,11 @@ module.exports = merge(common, {
     filename: '[name].[contenthash].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  //   performance: {
-  //     assetFilter(assetFilename) {
-  //       return !assetFilename.endsWith('.png');
-  //     },
-  //   },
+  performance: {
+    assetFilter(assetFilename) {
+      return !assetFilename.endsWith('.png');
+    },
+  },
   optimization: {
     minimizer: [
       new TerserPlugin(),
