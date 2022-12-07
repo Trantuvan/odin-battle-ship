@@ -192,16 +192,37 @@ export default (function placeShipView() {
     // *click to placeShip into board
     cellArray.forEach((cell) => {
       cell.addEventListener('click', (evt) => {
-        const popCurrentShip = playerFleet.shift();
+        // *prevent click on already shot when clicked on cell
+        if (evt.target.getAttribute('isPopulated-data') === 'true') {
+          return undefined;
+        }
+
         const { column, row } = grid.toXY(
           evt.target.getAttribute('local-data')
         );
 
-        if (popCurrentShip === undefined) {
-          return undefined;
-        }
-
         if (direction === 'horizontal') {
+          try {
+            const isShipFit = grid.isFit(
+              grid.grid[row],
+              column,
+              playerFleet[0].size
+            );
+
+            // *prevent click to place the ship when size not fit
+            if (isShipFit === false) {
+              return undefined;
+            }
+          } catch (error) {
+            return undefined;
+          }
+
+          const popCurrentShip = playerFleet.shift();
+
+          if (popCurrentShip === undefined) {
+            return undefined;
+          }
+
           evt.target.style.cursor = 'cell';
           const rowCellsDom = twoDCellArray[row];
           colorShipSize(rowCellsDom, column, column + popCurrentShip.size);
@@ -214,6 +235,25 @@ export default (function placeShipView() {
         }
 
         if (direction === 'vertical') {
+          const colArray = (arr, col) => arr.map((v) => v[col]);
+          try {
+            const isShipFit = grid.isFit(
+              colArray(grid.grid, column),
+              row,
+              playerFleet[0].size
+            );
+            if (isShipFit === false) {
+              return undefined;
+            }
+          } catch (error) {
+            return undefined;
+          }
+
+          const popCurrentShip = playerFleet.shift();
+
+          if (popCurrentShip === undefined) {
+            return undefined;
+          }
           evt.target.style.cursor = 'cell';
           const columnArray = (arr, col) => arr.map((v) => v[col]);
           const rowCellsDom = columnArray(twoDCellArray, column);
