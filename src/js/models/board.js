@@ -37,13 +37,6 @@ export default function board() {
     return false;
   }
 
-  function isLegal(gridValue) {
-    if (gridValue === 'hit' || gridValue === 'miss') {
-      return false;
-    }
-    return true;
-  }
-
   function addShipHorizontal(row, column, size, type) {
     const startIndex = column;
     const endIndex = column + size;
@@ -83,11 +76,6 @@ export default function board() {
     let data;
     const { column, row } = toXY(coord);
     const gridValue = grid[row][column];
-    const isLegalShot = isLegal(gridValue);
-
-    if (isLegalShot === false) {
-      throw new Error('illegal shot');
-    }
 
     switch (gridValue) {
       case 0:

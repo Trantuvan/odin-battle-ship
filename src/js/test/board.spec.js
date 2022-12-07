@@ -144,12 +144,5 @@ describe('board', () => {
       expect(actualGridValue).toMatch(expectedGridValue);
       expect(actualMessage).toEqual(expectedData);
     });
-
-    it('should error out illegal shot at "I0"', () => {
-      const actual = () => initBoard.receiveAttack('I0');
-      const expected = /^illegal shot$/;
-
-      expect(actual).toThrow(expected);
-    });
   });
 });

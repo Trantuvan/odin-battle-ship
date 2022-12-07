@@ -1,16 +1,19 @@
 import gameController from '../controllers/gameController';
+import hitMarker from '../../assets/img/hit-marker.svg';
+import missMarker from '../../assets/img/miss-marker.svg';
 /* eslint-disable no-param-reassign */
 export default (function receiveAttackView() {
-  function addDomEvent(friendlyCells, enemyCells) {
+  function addDomEvent(friendlyCells, enemyCells, playStatus) {
     // *hover to guide where to click
     enemyCells.forEach((cell) => {
       cell.addEventListener('mouseover', (evt) => {
         if (evt.target.getAttribute('isPopulated-data') === 'true') {
           evt.target.style.backgroundColor = 'red';
           evt.target.style.cursor = 'not-allowed';
+        } else {
+          evt.target.style.cursor = 'cell';
+          evt.target.style.backgroundColor = 'green';
         }
-
-        evt.target.style.backgroundColor = 'grey';
       });
     });
 
@@ -18,6 +21,61 @@ export default (function receiveAttackView() {
     enemyCells.forEach((cell) => {
       cell.addEventListener('mouseout', (evt) => {
         evt.target.style.backgroundColor = 'hsl(201, 90%, 27%)';
+      });
+    });
+
+    // *click enemyCells to attack GameLoop
+    enemyCells.forEach((cell) => {
+      cell.addEventListener('click', (evt) => {
+        const hitImg = document.createElement('img');
+        hitImg.src = hitMarker;
+        const missImg = document.createElement('img');
+        missImg.src = missMarker;
+
+        // *prevent click on already shot when clicked on svg
+        hitImg.addEventListener('click', (e) => {
+          e.stopPropagation();
+          return undefined;
+        });
+        // *prevent click on already shot when clicked on svg
+        missImg.addEventListener('click', (e) => {
+          e.stopPropagation();
+          return undefined;
+        });
+        // *prevent click on already shot when clicked on cell
+        if (evt.target.getAttribute('isPopulated-data') === 'true') {
+          return undefined;
+        }
+
+        const playerResult = gameController.playerPlay(
+          evt.target.getAttribute('local-data')
+        );
+
+        if (playerResult === 'wins') {
+          console.log(`${gameController.player1.name} wins`);
+          return undefined;
+        }
+
+        switch (playerResult) {
+          case 'hit':
+            playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and hit`;
+            evt.target.appendChild(hitImg);
+            evt.target.setAttribute('isPopulated-data', 'true');
+            break;
+
+          case 'miss':
+            playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and miss`;
+            evt.target.appendChild(missImg);
+            evt.target.setAttribute('isPopulated-data', 'true');
+            break;
+
+          default:
+            console.log(playerResult);
+            break;
+        }
+
+        // const cpuResult = gameController.cpuPlay();
+        return undefined;
       });
     });
   }
@@ -254,9 +312,10 @@ export default (function receiveAttackView() {
 
     const friendlyCells = playGround.querySelectorAll('.friendly-water .cell');
     const enemyCells = playGround.querySelectorAll('.enemy-water .cell');
+    const playStatus = playGround.querySelector('.play-status > p');
 
     renderAllFriendlyCells(friendlyCells, domArray);
-    addDomEvent(friendlyCells, enemyCells);
+    addDomEvent(friendlyCells, enemyCells, playStatus);
   };
 
   return {

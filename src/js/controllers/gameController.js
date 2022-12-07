@@ -75,7 +75,7 @@ export default (function gameController() {
   function cpuPlay() {
     // *1. check wins
     if (isCpuWin() === true) {
-      return `${cpuPlay.name} wins`;
+      return 'wins';
     }
 
     // *2. generateMove
@@ -87,11 +87,15 @@ export default (function gameController() {
 
       if (result.message === 'miss') {
         // *render miss
+        return 'miss';
       }
 
       // *3. render hit
       // *4. hit cpu ship
-      fleet1[result.shipType].hit();
+      if (result.message === 'hit') {
+        fleet1[result.shipType].hit();
+        return 'hit';
+      }
     } catch (error) {
       if (error.message === 'illegal shot') {
         // TODO: dom not allow this play
@@ -104,7 +108,7 @@ export default (function gameController() {
   function playerPlay(playerMove) {
     // *1 check if player is win
     if (isPlayerWin() === true) {
-      return `${player1.name} wins`;
+      return 'wins';
     }
 
     // *2 not wins yet, allow to shoot
@@ -112,12 +116,14 @@ export default (function gameController() {
       const result = cpuGrid.receiveAttack(playerMove);
 
       if (result.message === 'miss') {
-        // *render miss
+        return 'miss';
       }
 
-      // *3. render hit
-      // *4. hit cpu ship
-      cpuFleet[result.shipType].hit();
+      if (result.message === 'hit') {
+        // *3. hit cpu ship
+        cpuFleet[result.shipType].hit();
+        return 'hit';
+      }
     } catch (error) {
       if (error.message === 'illegal shot') {
         // TODO: dom not allow this play
