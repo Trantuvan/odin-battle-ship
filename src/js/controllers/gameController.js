@@ -82,11 +82,11 @@ export default (function gameController() {
       coord: '',
     };
 
-    // *1. check wins
-    if (isCpuWin() === true) {
-      data.isWin = true;
-      return data;
-    }
+    // // *1. check wins
+    // if (isCpuWin() === true) {
+    //   data.isWin = true;
+    //   return data;
+    // }
 
     // *2. generateMove
     const coord = cpuPlayer.generateCoord();
@@ -126,11 +126,11 @@ export default (function gameController() {
       ship: undefined,
     };
 
-    // *1 check if player is win & return immediately
-    if (isPlayerWin() === true) {
-      data.isWin = true;
-      return data;
-    }
+    // // *1 check if player is win & return immediately
+    // if (isPlayerWin() === true) {
+    //   data.isWin = true;
+    //   return data;
+    // }
 
     // *2 not wins yet, allow to shoot
     try {
@@ -171,6 +171,8 @@ export default (function gameController() {
     get cpuPlayer() {
       return cpuPlayer;
     },
+    isCpuWin,
+    isPlayerWin,
     createPlayer,
     init,
     playerPlay,

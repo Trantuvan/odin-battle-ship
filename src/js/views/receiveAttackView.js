@@ -1,9 +1,10 @@
 import gameController from '../controllers/gameController';
 import hitMarker from '../../assets/img/hit-marker.svg';
 import missMarker from '../../assets/img/miss-marker.svg';
+import modalView from './modalView';
 /* eslint-disable no-param-reassign */
 export default (function receiveAttackView() {
-  function addDomEvent(friendlyCells, enemyCells, playStatus) {
+  function addDomEvent(friendlyCells, enemyCells, playStatus, enemyGrid) {
     // *hover to guide where to click
     enemyCells.forEach((cell) => {
       cell.addEventListener('mouseover', (evt) => {
@@ -36,6 +37,26 @@ export default (function receiveAttackView() {
       }, duration);
     }
 
+    // *check wins
+    enemyGrid.addEventListener('click', () => {
+      if (gameController.isPlayerWin() === true) {
+        // // *remove event listeners by cloneNode
+        // enemyGrid.replaceWith(enemyGrid.cloneNode(true));
+        // friendlyGrid.replaceWith(friendlyGrid.cloneNode(true));
+        modalView.render({ player: gameController.player1 });
+        return undefined;
+      }
+
+      if (gameController.isCpuWin() === true) {
+        // // *remove event listeners by cloneNode
+        // enemyGrid.replaceWith(enemyGrid.cloneNode(true));
+        // friendlyGrid.replaceWith(friendlyGrid.cloneNode(true));
+        modalView.render({ player: gameController.cpuPlayer });
+        return undefined;
+      }
+      return undefined;
+    });
+
     // *click enemyCells to attack GameLoop
     enemyCells.forEach((cell) => {
       cell.addEventListener('click', (evt) => {
@@ -67,10 +88,10 @@ export default (function receiveAttackView() {
           evt.target.getAttribute('local-data')
         );
 
-        if (playerResult.isWin === true) {
-          console.log(`${gameController.player1.name} wins`);
-          return undefined;
-        }
+        // if (playerResult.isWin === true) {
+        //   console.log(`${gameController.player1.name} wins`);
+        //   return undefined;
+        // }
 
         if (playerResult.isMiss === true) {
           playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and miss`;
@@ -90,10 +111,10 @@ export default (function receiveAttackView() {
 
         const cpuResult = gameController.cpuPlay();
 
-        if (cpuResult.isWin === true) {
-          console.log(`${gameController.cpuPlayer.name} wins`);
-          return undefined;
-        }
+        // if (cpuResult.isWin === true) {
+        //   console.log(`${gameController.cpuPlayer.name} wins`);
+        //   return undefined;
+        // }
 
         if (cpuResult.isMiss === true) {
           renderCpuShot(
@@ -353,10 +374,12 @@ export default (function receiveAttackView() {
 
     const friendlyCells = playGround.querySelectorAll('.friendly-water .cell');
     const enemyCells = playGround.querySelectorAll('.enemy-water .cell');
+    const enemyGrid = playGround.querySelector('.enemy-water > .grid');
+    const friendlyGrid = playGround.querySelector('.friendly-water > .grid');
     const playStatus = playGround.querySelector('.play-status > p');
 
     renderAllFriendlyCells(friendlyCells, domArray);
-    addDomEvent(friendlyCells, enemyCells, playStatus);
+    addDomEvent(friendlyCells, enemyCells, playStatus, enemyGrid, friendlyGrid);
   };
 
   return {

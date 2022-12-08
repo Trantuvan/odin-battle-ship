@@ -248,6 +248,46 @@ img {
   color: hsl(0, 0%, 100%);
 }
 
+.modal {
+  /* padding: 1em; */
+  /* width: min(50ch, 100%); */
+  width: 60vw;
+  height: 20vh;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+  background-color: var(--blue-600);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.modal-info {
+  color: hsl(0, 0%, 100%);
+  font-size: 4rem;
+  font-weight: 500;
+}
+
+.btn {
+  border-radius: 3px;
+  color: var(--blue-600);
+  background-color: hsl(0, 0%, 100%);
+  font-size: 1.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--blue-600);
+  color: hsl(0, 0%, 100%);
+}
+
+.modal::backdrop {
+  background-color: hsl(0, 0%, 0%, 0.5);
+}
+
 .disabled {
   display: none;
 }
