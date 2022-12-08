@@ -73,42 +73,63 @@ export default (function gameController() {
   }
 
   function cpuPlay() {
+    const data = {
+      isWin: false,
+      isHit: false,
+      isMiss: false,
+      isSunk: false,
+      ship: undefined,
+      coord: '',
+    };
+
     // *1. check wins
     if (isCpuWin() === true) {
-      return 'wins';
+      data.isWin = true;
+      return data;
     }
 
     // *2. generateMove
     const coord = cpuPlayer.generateCoord();
+    data.coord = coord;
 
     // *3 not wins yet, allow to shoot
     try {
       const result = grid1.receiveAttack(coord);
 
       if (result.message === 'miss') {
-        // *render miss
-        return 'miss';
+        data.isMiss = true;
+        return data;
       }
 
-      // *3. render hit
-      // *4. hit cpu ship
+      // *3. hit cpu ship
       if (result.message === 'hit') {
         fleet1[result.shipType].hit();
-        return 'hit';
+        data.isHit = true;
+      }
+
+      if (fleet1[result.shipType].isSunk() === true) {
+        data.isSunk = true;
+        data.ship = fleet1[result.shipType];
       }
     } catch (error) {
-      if (error.message === 'illegal shot') {
-        // TODO: dom not allow this play
-        return error;
-      }
+      return error;
     }
-    return undefined;
+    return data;
   }
 
   function playerPlay(playerMove) {
-    // *1 check if player is win
+    const data = {
+      isWin: false,
+      isHit: false,
+      isMiss: false,
+      isSunk: false,
+      ship: undefined,
+    };
+
+    // *1 check if player is win & return immediately
     if (isPlayerWin() === true) {
-      return 'wins';
+      data.isWin = true;
+      return data;
     }
 
     // *2 not wins yet, allow to shoot
@@ -116,22 +137,25 @@ export default (function gameController() {
       const result = cpuGrid.receiveAttack(playerMove);
 
       if (result.message === 'miss') {
-        return 'miss';
+        data.isMiss = true;
+        return data;
       }
 
       if (result.message === 'hit') {
         // *3. hit cpu ship
         cpuFleet[result.shipType].hit();
-        return 'hit';
+        data.isHit = true;
+      }
+
+      if (cpuFleet[result.shipType].isSunk() === true) {
+        data.isSunk = true;
+        data.ship = cpuFleet[result.shipType];
       }
     } catch (error) {
-      if (error.message === 'illegal shot') {
-        // TODO: dom not allow this play
-        return error;
-      }
+      return error;
     }
 
-    return undefined;
+    return data;
   }
 
   return {
@@ -143,6 +167,9 @@ export default (function gameController() {
     },
     get player1() {
       return player1;
+    },
+    get cpuPlayer() {
+      return cpuPlayer;
     },
     createPlayer,
     init,

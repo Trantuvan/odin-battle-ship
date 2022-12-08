@@ -24,6 +24,18 @@ export default (function receiveAttackView() {
       });
     });
 
+    function renderCpuShot(duration, imgType, coord, statMsg) {
+      const friendlyArray = Array.from(friendlyCells);
+
+      setTimeout(() => {
+        playStatus.textContent = `${statMsg}`;
+        const currentCell = friendlyArray.find(
+          (domCell) => domCell.getAttribute('local-data') === coord
+        );
+        currentCell.appendChild(imgType);
+      }, duration);
+    }
+
     // *click enemyCells to attack GameLoop
     enemyCells.forEach((cell) => {
       cell.addEventListener('click', (evt) => {
@@ -31,6 +43,10 @@ export default (function receiveAttackView() {
         hitImg.src = hitMarker;
         const missImg = document.createElement('img');
         missImg.src = missMarker;
+        const hitImgCpu = document.createElement('img');
+        hitImgCpu.src = hitMarker;
+        const missImgCpu = document.createElement('img');
+        missImgCpu.src = missMarker;
 
         // *prevent click on already shot when clicked on svg
         hitImg.addEventListener('click', (e) => {
@@ -51,30 +67,55 @@ export default (function receiveAttackView() {
           evt.target.getAttribute('local-data')
         );
 
-        if (playerResult === 'wins') {
+        if (playerResult.isWin === true) {
           console.log(`${gameController.player1.name} wins`);
           return undefined;
         }
 
-        switch (playerResult) {
-          case 'hit':
-            playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and hit`;
-            evt.target.appendChild(hitImg);
-            evt.target.setAttribute('isPopulated-data', 'true');
-            break;
-
-          case 'miss':
-            playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and miss`;
-            evt.target.appendChild(missImg);
-            evt.target.setAttribute('isPopulated-data', 'true');
-            break;
-
-          default:
-            console.log(playerResult);
-            break;
+        if (playerResult.isMiss === true) {
+          playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and miss`;
+          evt.target.appendChild(missImg);
+          evt.target.setAttribute('isPopulated-data', 'true');
         }
 
-        // const cpuResult = gameController.cpuPlay();
+        if (playerResult.isHit === true) {
+          playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and hit`;
+          evt.target.appendChild(hitImg);
+          evt.target.setAttribute('isPopulated-data', 'true');
+        }
+
+        if (playerResult.isSunk === true) {
+          playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and sunk ${playerResult.ship.name}`;
+        }
+
+        const cpuResult = gameController.cpuPlay();
+
+        if (cpuResult.isWin === true) {
+          console.log(`${gameController.cpuPlayer.name} wins`);
+          return undefined;
+        }
+
+        if (cpuResult.isMiss === true) {
+          renderCpuShot(
+            1000,
+            missImgCpu,
+            cpuResult.coord,
+            'the enemy fires a shot at your water and miss'
+          );
+        }
+
+        if (cpuResult.isHit === true) {
+          renderCpuShot(
+            1000,
+            hitImgCpu,
+            cpuResult.coord,
+            'the enemy fires a shot at your water and hit'
+          );
+        }
+
+        if (cpuResult.isSunk === true) {
+          playStatus.textContent = `the enemy fires a shot at your water and sunk ${cpuResult.ship.name}`;
+        }
         return undefined;
       });
     });
