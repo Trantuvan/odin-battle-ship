@@ -1,13 +1,15 @@
 export default (function modalView() {
-  function addDomEvent(btn, modal) {
+  function addDomEvent(btn, modal, domElement) {
     btn.addEventListener('click', () => {
-      console.log('hi');
+      const welcome = document.querySelector('.welcome');
       modal.close();
+      domElement.classList.add('disabled');
       modal.classList.add('disabled');
+      welcome.classList.remove('disabled');
     });
   }
 
-  const render = ({ player }) => {
+  const render = ({ player, domElement }) => {
     const modal = document.querySelector('.modal');
     modal.innerHTML = `
     <div class="modal-info">${player.name} TAKES THE ROUND</div>
@@ -18,7 +20,7 @@ export default (function modalView() {
     modal.showModal();
     modal.classList.remove('disabled');
     const btn = modal.querySelector('.btn');
-    addDomEvent(btn, modal);
+    addDomEvent(btn, modal, domElement);
   };
 
   return {

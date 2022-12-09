@@ -43,7 +43,11 @@ export default (function receiveAttackView() {
         // // *remove event listeners by cloneNode
         // enemyGrid.replaceWith(enemyGrid.cloneNode(true));
         // friendlyGrid.replaceWith(friendlyGrid.cloneNode(true));
-        modalView.render({ player: gameController.player1 });
+        const playGround = document.querySelector('.play-ground');
+        modalView.render({
+          player: gameController.player1,
+          domElement: playGround,
+        });
         return undefined;
       }
 
@@ -51,7 +55,11 @@ export default (function receiveAttackView() {
         // // *remove event listeners by cloneNode
         // enemyGrid.replaceWith(enemyGrid.cloneNode(true));
         // friendlyGrid.replaceWith(friendlyGrid.cloneNode(true));
-        modalView.render({ player: gameController.cpuPlayer });
+        const playGround = document.querySelector('.play-ground');
+        modalView.render({
+          player: gameController.cpuPlayer,
+          domElement: playGround,
+        });
         return undefined;
       }
       return undefined;
@@ -88,11 +96,6 @@ export default (function receiveAttackView() {
           evt.target.getAttribute('local-data')
         );
 
-        // if (playerResult.isWin === true) {
-        //   console.log(`${gameController.player1.name} wins`);
-        //   return undefined;
-        // }
-
         if (playerResult.isMiss === true) {
           playStatus.textContent = `${gameController.player1.name} fires a shot at enemy water and miss`;
           evt.target.appendChild(missImg);
@@ -110,11 +113,6 @@ export default (function receiveAttackView() {
         }
 
         const cpuResult = gameController.cpuPlay();
-
-        // if (cpuResult.isWin === true) {
-        //   console.log(`${gameController.cpuPlayer.name} wins`);
-        //   return undefined;
-        // }
 
         if (cpuResult.isMiss === true) {
           renderCpuShot(
@@ -379,7 +377,14 @@ export default (function receiveAttackView() {
     const playStatus = playGround.querySelector('.play-status > p');
 
     renderAllFriendlyCells(friendlyCells, domArray);
-    addDomEvent(friendlyCells, enemyCells, playStatus, enemyGrid, friendlyGrid);
+    addDomEvent(
+      friendlyCells,
+      enemyCells,
+      playStatus,
+      enemyGrid,
+      friendlyGrid,
+      playGround
+    );
   };
 
   return {
