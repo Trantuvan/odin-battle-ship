@@ -16,11 +16,11 @@ export default (function placeShipView() {
       playGround.classList.remove('disabled');
       receiveAttackView.render({ domArray: cellArray });
 
-      cellArray.forEach((cell) => {
-        cell.setAttribute('isPopulated-data', 'false');
-        cell.style.backgroundColor = 'hsl(201, 90%, 27%)';
-        cell.style.cursor = 'pointer';
-      });
+      // cellArray.forEach((cell) => {
+      //   cell.setAttribute('isPopulated-data', 'false');
+      //   cell.style.backgroundColor = 'hsl(201, 90%, 27%)';
+      //   cell.style.cursor = 'pointer';
+      // });
       return undefined;
     });
 

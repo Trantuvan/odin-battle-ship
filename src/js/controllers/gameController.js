@@ -82,12 +82,6 @@ export default (function gameController() {
       coord: '',
     };
 
-    // // *1. check wins
-    // if (isCpuWin() === true) {
-    //   data.isWin = true;
-    //   return data;
-    // }
-
     // *2. generateMove
     const coord = cpuPlayer.generateCoord();
     data.coord = coord;
@@ -126,12 +120,6 @@ export default (function gameController() {
       ship: undefined,
     };
 
-    // // *1 check if player is win & return immediately
-    // if (isPlayerWin() === true) {
-    //   data.isWin = true;
-    //   return data;
-    // }
-
     // *2 not wins yet, allow to shoot
     try {
       const result = cpuGrid.receiveAttack(playerMove);
@@ -158,6 +146,15 @@ export default (function gameController() {
     return data;
   }
 
+  function reset() {
+    // *reset 2 grids
+    cpuGrid.restoreGrid();
+    grid1.restoreGrid();
+    // *reset 2 fleets
+    fleet1 = [];
+    cpuFleet = [];
+  }
+
   return {
     get grid1() {
       return grid1;
@@ -177,5 +174,6 @@ export default (function gameController() {
     init,
     playerPlay,
     cpuPlay,
+    reset,
   };
 })();

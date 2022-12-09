@@ -1,7 +1,11 @@
+import gameController from '../controllers/gameController';
+
 export default (function modalView() {
   function addDomEvent(btn, modal, domElement) {
     btn.addEventListener('click', () => {
       const welcome = document.querySelector('.welcome');
+      gameController.reset();
+      gameController.init();
       modal.close();
       domElement.classList.add('disabled');
       modal.classList.add('disabled');
