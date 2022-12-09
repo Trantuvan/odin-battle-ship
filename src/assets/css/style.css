@@ -229,7 +229,7 @@ img {
 
 .play-status > p {
   padding: 1em;
-  font-size: clamp(1.8vw, 3ch, 2.5vw);
+  font-size: clamp(1.5vw, 3ch, 2vw);
   font-weight: 500;
   color: hsl(0, 0%, 100%);
 }
