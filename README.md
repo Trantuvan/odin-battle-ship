@@ -6,7 +6,6 @@ This toy project follows TDD design.The design of the project is to showcase the
 
 - Webback buildtool (prettier/eslint-airbnb/babel)
 - Jest unit tests
-- Scss
 
 The aim of this app is to build your simple and minimalist battleship game.
 
