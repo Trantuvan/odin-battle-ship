@@ -1,4 +1,4 @@
-# odin-shopping-cart
+# odin-battle-ship
 
 ## What is this about?
 
